@@ -2,6 +2,7 @@ from scipy.misc.pilutil import imread
 import random
 import numpy as np
 import matplotlib.pyplot as plt
+import webbrowser
 
 # dict to avoid duplicate patches
 patch_loc_dict = dict()
@@ -119,13 +120,12 @@ def get_reshaped_eigenvectors(patches, dimension, num_patches):
         raise exc
 
 
-def compute_correlation_matrix(patches, dimension, total_patches):
+def compute_correlation_matrix(patches, dimension):
     """
     Function to compute the correlation matrix
 
     :param patches: ND array of reshaped patches
     :param dimension: dimension of the patches
-    :param total_patches: total number of patches
     :return: returns the "dimension by dimension" correlation matrix
     """
     func_tag = "compute_correlation_matrix"
@@ -173,29 +173,39 @@ def concat_images(m):
     :param m: index of the part of the nd array being concatenated
     :return: a concatenated array of top 64 eigenvectors in the form of an 8*8 grid
     """
-    img = np.pad(reshaped_eigenvectors[:, :, 8 * m], (1, 1), 'constant', constant_values=0)
-    for i in range(1, 8):
-        vect_pad = np.pad(reshaped_eigenvectors[:, :, 8 * m + i], (1, 1), 'constant', constant_values=0)
-        img = np.concatenate((img, vect_pad), axis=1)
-    return img
+    func_tag = "concat_images"
+    try:
+        img = np.pad(reshaped_eigenvectors[:, :, 8 * m], (1, 1), 'constant', constant_values=0)
+        for i in range(1, 8):
+            vect_pad = np.pad(reshaped_eigenvectors[:, :, 8 * m + i], (1, 1), 'constant', constant_values=0)
+            img = np.concatenate((img, vect_pad), axis=1)
+        return img
+    except Exception as exc:
+        print("Exception %s in %s" % (exc, func_tag))
+        raise exc
 
 
 if __name__ == '__main__':
 
+    total_patches = 1000
+
+    dimension_index = 0
+
+    size_patch = 16
     # 1. Read the image
     read_image = imread("clockwork-angels.jpg", mode="RGB")
 
     # 2. Pick the first dimension of the image
-    first_dimension = read_image[:, :, 0]
+    chosen_dimension = read_image[:, :, dimension_index]
 
     # 3. Creating 1000 random 16x16 patches
-    rand_pat = get_random_patches(first_dimension, 1000, 16)
+    rand_pat = get_random_patches(chosen_dimension, total_patches, size_patch)
 
     # 4.1 Reshaping the patches created above
-    reshape_patches = get_reshaped_patch(rand_pat, 16, 1000)
+    reshape_patches = get_reshaped_patch(rand_pat, size_patch, total_patches)
 
     # 4.2 Computing teh correlation matrix
-    corr_mat = compute_correlation_matrix(reshape_patches, 256, 1000)
+    corr_mat = compute_correlation_matrix(reshape_patches, 256)
 
     # 5.1 Computing all eigenvectors of above matrix
     eig_val, eig_vec = np.linalg.eig(corr_mat)
@@ -211,12 +221,13 @@ if __name__ == '__main__':
 
     eig_val_list.sort(reverse=True)
     # 5.3 listing the top 64 eigenvalues
-    print(eig_val_list[:64])
+    patch_count_cutoff = 64
+    print(eig_val_list[:patch_count_cutoff])
 
-    top_eigen_vectors = get_top_n_eigenvectors(eig_val_list, index_dict, eig_vec, 64)
+    top_eigen_vectors = get_top_n_eigenvectors(eig_val_list, index_dict, eig_vec, patch_count_cutoff)
 
     # 6.1 Reshaping the 256*1 eigenvectors as 16*16 patches
-    reshaped_eigenvectors = get_reshaped_eigenvectors(top_eigen_vectors, 16, 64)
+    reshaped_eigenvectors = get_reshaped_eigenvectors(top_eigen_vectors, size_patch, patch_count_cutoff)
 
     # 6.2 Displaying the top 64 eigenvectors as 16x16 images in an 8x8 table
     image = concat_images(0)
@@ -225,3 +236,17 @@ if __name__ == '__main__':
 
     plt.imshow(image, cmap='gray')
     plt.show()
+
+    # 8 Clockwork Angels and Steampunk
+
+    response1 = input("Would you like to know the relationship between Clockwork Angels and Steampunk?(yes/no)")
+    if response1 == 'yes':
+        webbrowser.open('https://www.etonline.com/music/122647_Rush_Goes_Steampunk_with_Clockwork_Angels')
+
+    response2 = input("Would you like to listen to the song Clockwork Angels from the album Clockwork Angels on youtube?(yes/no)")
+    if response2 == 'yes':
+        webbrowser.open('https://www.youtube.com/watch?v=IIAftTV4tBk')
+
+    response3 = input("Would you like to buy it on Amazon?(yes/no)")
+    if response3 == 'yes':
+        webbrowser.open('https://www.amazon.com/Clockwork-Angels-Rush/dp/B007I2BZIE')
