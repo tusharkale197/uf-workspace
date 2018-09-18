@@ -163,7 +163,62 @@ def partition(input_list, start, end):
         raise exc
 
 
+def min_max(input_list):
+    """
+
+    :param input_list:
+    :return:
+    """
+    try:
+
+        if len(input_list) % 2 ==0:
+            # Just pass the list to min max even with min = max = a[0]
+            minimum = input_list[0]
+            maximum = input_list[0]
+            minimum, maximum = min_max_even(input_list, minimum, maximum)
+        else:
+            # compute min max of first two and send a[2:] to min max even
+            if input_list[0] > input_list[1]:
+                minimum = input_list[1]
+                maximum = input_list[0]
+            else:
+                minimum = input_list[0]
+                maximum = input_list[1]
+            minimum, maximum = min_max_even(input_list[1:], minimum, maximum)
+
+        return minimum, maximum
+    except Exception as exc:
+        raise exc
+
+
+def min_max_even(input_list, minimum, maximum):
+    """
+
+    :param input_list:
+    :param minimum: Current placeholder for minimum
+    :param maximum: Current placeholder for maximum
+    :return:
+    """
+    try:
+        for i in range(0, len(input_list)-1):
+            if input_list[i] > input_list[i+1]:
+                if input_list[i] > maximum:
+                    maximum = input_list[i]
+                if input_list[i+1] < minimum:
+                    minimum = input_list[i+1]
+            else:
+                if input_list[i+1] > maximum:
+                    maximum = input_list[i+1]
+                if input_list[i] < minimum:
+                    minimum = input_list[i]
+
+        return minimum, maximum
+    except Exception as exc:
+        raise exc
+
+
 if __name__ == "__main__":
-    b = [15, 3, 2, 1, 9, 5, 7, 8, 6]
+    b = [15, 3, 2, 1, 9, 5, 7, 8]
     # print(max_heapify(a, 1, len(a)-1))
-    print(partition(b, 0, len(b)-1))
+    # print(partition(b, 0, len(b)-1))
+    print(min_max(b))
