@@ -12,5 +12,5 @@ Legend-
 	 
 Each folder has its own utils file.
 
-	I make an effort to follow coding conventions and best practices (Anything and everything from doc strings and inline comments and indentation(TABS |m|) to project file structure) wherever I can and whatever that I have picked up from my industry experience as a software engineer.
+	I try to follow coding conventions and best practices (anything and everything from doc strings and inline comments to project file structure or whatever I have picked up from my industry experience as a software engineer) wherever I can.
 	Open to criticism! Drop me a line if you think I've picked up the wrong things and I'll promptly try and improve on that.
