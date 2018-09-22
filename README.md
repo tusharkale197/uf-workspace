@@ -1,6 +1,6 @@
 # uf-workspace
 
-This respository has all the code related to projects, homework assignments and coding practice during my 
+This respository has all the code related to projects, homework assignments and coding practice I do during my 
 MS in Computer Science at UF.
 
 PS: The repo goes private when a homework assignment is in progress.
