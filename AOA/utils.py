@@ -143,8 +143,10 @@ def partition(input_list, start, end):
         # else:
         #     input_list[start_pointer], input_list[end] = input_list[end], input_list[start_pointer]
         #     pivot_index = start_pointer
+
+        # Turns out this is a modification on hoare partion which ensures return of index of pivot
         while start_pointer <= end_pointer:
-            while input_list[start_pointer] < input_list[end]:
+            while input_list[start_pointer] <= input_list[end]:
                 start_pointer = start_pointer + 1
 
             while input_list[end_pointer] > input_list[end]:
@@ -158,6 +160,41 @@ def partition(input_list, start, end):
         pivot_index = start_pointer
         input_list[pivot_index], input_list[end] = input_list[end], input_list[pivot_index]
         return pivot_index, input_list
+
+    except Exception as exc:
+        raise exc
+
+
+def hoare_partition(input_list, start, end):
+    """
+        Hoare partiotion as described in CORMEN problem 7.1
+    :param input_list:
+    :param start: start index of list
+    :param end: last index of list
+    :return:
+    """
+
+    try:
+        start_pointer = start-1
+        end_pointer = end+1
+        X = input_list[start]
+        while True:
+
+            while True:
+                end_pointer = end_pointer - 1
+                if input_list[end_pointer] <= X:
+                    break
+
+            while True:
+                start_pointer = start_pointer + 1
+                if input_list[start_pointer] >= X:
+                    break
+
+            if start_pointer < end_pointer:
+                input_list[start_pointer], input_list[end_pointer] = input_list[end_pointer], input_list[start_pointer]
+            else:
+                pivot_index = end_pointer
+                return pivot_index, input_list
 
     except Exception as exc:
         raise exc
@@ -219,6 +256,22 @@ def min_max_even(input_list, minimum, maximum):
 
 if __name__ == "__main__":
     b = [15, 3, 2, 1, 9, 5, 7, 8]
+    rev_sorted = [10,2,3,5,6,10, 5, 9, 8, 7, 6, 5,5]
+    sorted_list = [1, 2, 3, 4, 5]
+    random = [5, 1, 2, 4, 3]
+    random_hoare = [3, 1, 2, 4, 5]
     # print(max_heapify(a, 1, len(a)-1))
     # print(partition(b, 0, len(b)-1))
-    print(min_max(b))
+    print("partition reverse sorted")
+    print(partition(rev_sorted, 0, len(rev_sorted)-1))
+    # print("partition sorted")
+    # print(partition(sorted_list, 0, len(sorted_list)-1))
+    # print("partition random")
+    # print(partition(random, 0, len(random)-1))
+    # print("hoare partition reverse sorted")
+    # print(hoare_partition(rev_sorted, 0, len(rev_sorted)-1))
+    # print("hoare partition sorted")
+    # print(hoare_partition(sorted_list, 0, len(sorted_list)-1))
+    # print("hoare partition random")
+    # print(hoare_partition(random_hoare, 0, len(random_hoare)-1))
+    # # print(min_max(b))
