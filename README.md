@@ -10,8 +10,13 @@ Legend-
 -   MIS - Maths for Intelligent Systems
     *   HW2 - Homework 2 - Principal Component Analysis
     *	HW3 - Homework 3 - Singular value Decomposition
+    *   Hw4 - Homework 4 - Multi-class Linear Classifier
+
 	 
 Each folder has its own utils file.
 
-	I try to follow coding conventions and best practices (anything and everything from doc strings and inline comments to project file structure or whatever I have picked up from my industry experience as a software engineer) wherever I can.
-	Open to criticism! Drop me a line if you think I've picked up the wrong things and I'll promptly try and improve on that.
+	I try to follow coding conventions and best practices 
+	(anything and everything from doc strings and inline comments to project file structure or 
+	whatever I have picked up from my industry experience as a software engineer) wherever I can.
+	Open to criticism! Drop me a line if you think I've picked up the wrong things and 
+	I'll promptly try and improve on that.
