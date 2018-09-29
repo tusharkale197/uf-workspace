@@ -10,7 +10,7 @@ Legend-
 -   MIS - Maths for Intelligent Systems
     *   HW2 - Homework 2 - Principal Component Analysis
     *	HW3 - Homework 3 - Singular value Decomposition
-    *   Hw4 - Homework 4 - Multi-class Linear Classifier
+    *   HW4 - Homework 4 - Multi-class Linear Classifier
 
 	 
 Each folder has its own utils file.
