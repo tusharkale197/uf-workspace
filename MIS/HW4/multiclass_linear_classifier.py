@@ -1,4 +1,6 @@
 """
+https://github.com/tusharkaley/uf-workspace/blob/master/MIS/HW4/multiclass_linear_classifier.py
+
 Math for Intelligent Systems Homework 4
 Problem statement:
 2. Multi-class Linear Classifier
