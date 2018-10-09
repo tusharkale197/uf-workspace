@@ -21,6 +21,7 @@ class MulticlassClassifier:
     def read_and_partition_data(classes_dict, data_file_path, training=50):
         """
         This function takes the data file and partitions into test and training according to the given percentages
+        Division of data is class specific
 
         :param classes_dict: (dict)
         :param data_file_path: (str) Location of the datat file
@@ -44,6 +45,7 @@ class MulticlassClassifier:
                 if data.strip():
                     data_split = data.split(",")
                     x_values = [float(x) for x in data_split[:-1]]
+                    x_values.append(1.0)
                     num_feats = len(x_values)
                     class_value = data_split[-1].rstrip()
                     classes_x_values[class_value].append(x_values)
@@ -84,7 +86,7 @@ class MulticlassClassifier:
         except Exception as exc:
             raise exc
 
-    def classify_test_data_bulk(self, w_matrix, test_data, test_ytrans_values):
+    def classify_test_data_bulk_ret_conf_mat(self, w_matrix, test_data, test_ytrans_values):
         """
 
         :param w_matrix:
@@ -93,13 +95,19 @@ class MulticlassClassifier:
         :return:
         """
         try:
+            class_index_dict = dict()
+            class_index_dict["Iris-setosa"] = 0
+            class_index_dict["Iris-versicolor"] = 1
+            class_index_dict["Iris-virginica"] = 2
+            conf_matrix = np.zeros(shape=(3, 3), dtype=int)
             for i in range(0, len(test_data)):
                 class_name = self.classify_test_data_single(w_matrix, test_data[i])
-                if class_name == test_ytrans_values[i]:
-                    print("Success")
-                else:
-                    print("Check it tomorrow")
 
+                if class_name == test_ytrans_values[i]:
+                    conf_matrix[class_index_dict[class_name]][class_index_dict[class_name]] = conf_matrix[class_index_dict[class_name]][class_index_dict[class_name]] + 1
+                else:
+                    conf_matrix[class_index_dict[class_name]][class_index_dict[test_ytrans_values[i]]] = conf_matrix[class_index_dict[class_name]][class_index_dict[test_ytrans_values[i]]] + 1
+            return conf_matrix
         except Exception as exc:
             raise exc
 
@@ -136,25 +144,25 @@ class MulticlassClassifier:
 
 
 if __name__ == "__main__":
-    print("All the HW 4 classifier code goes here")
     m = MulticlassClassifier()
     # Dictionary with different classes and their discrminating vector
     class_dict = dict()
     class_dict["Iris-setosa"] = [1, 0, 0]
     class_dict["Iris-versicolor"] = [0, 1, 0]
     class_dict["Iris-virginica"] = [0, 0, 1]
-
+    training_percent = 50
     # This function reads the data from the data file and segregates it into training and test
-    training_xt_values, testing_data, training_yt_values, feature_count, testing_yt_values = m.read_and_partition_data(class_dict, "iris.data", 50)
+    training_xt_values, testing_data, training_yt_values, feature_count, testing_yt_values = m.read_and_partition_data(class_dict, "iris.data", training_percent)
 
     training_xt_values = np.asarray(training_xt_values)
     training_x_values = training_xt_values.transpose()
     training_yt_values = np.asarray(training_yt_values)
-    lamb_value = 0.0001
+
+    lamb_value = 1000
 
     # Computing the weight matrix
     weight_matrix = m.compute_weight_matrix(training_x_values, training_xt_values, training_yt_values, lamb_value, feature_count)
-    print(testing_data[0])
-    print(testing_data)
-    # Classify
-    m.classify_test_data_bulk(weight_matrix, testing_data, testing_yt_values)
+    # Classify and return confusion matrix
+    confusion_matrix = m.classify_test_data_bulk_ret_conf_mat(weight_matrix, testing_data, testing_yt_values)
+
+    print(confusion_matrix)
