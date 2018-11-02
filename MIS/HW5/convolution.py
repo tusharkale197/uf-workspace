@@ -24,6 +24,7 @@ class Convolution:
                 loop_len = len_seq_2
                 master_seq = seq_2.tolist()
                 slave_seq = seq_1.tolist()
+            slave_seq.reverse()
             len_conv = len_seq_1 + len_seq_2 - 1
             conv_op = [0] * len_conv
             for i in range(0, len_conv):
@@ -60,8 +61,7 @@ class Convolution:
             if zero_padding:
                 seq_1_list.extend([0] * (len(seq_2_list) - 1))
                 seq_2_list.extend([0] * (seq_1.shape[0] - 1))
-            seq_2_list.reverse()
-            conv = np.real(np.fft.ifft(np.fft.fft(seq_1_list) * np.fft.fft(seq_2_list)))
+            conv = np.real(np.fft.ifft(np.fft.fft(seq_1_list,n=len(seq_2_list)) * np.fft.fft(seq_2_list, n=len(seq_2_list))))
 
             return conv
         except Exception as exc:
@@ -104,22 +104,35 @@ class Convolution:
 if __name__ == "__main__":
 
     cv = Convolution()
+
     for j in range(0, 5):
-        # seqq_1 = cv.get_random_sequence(10, 20)
-        # seqq_2 = cv.get_random_sequence(10, 20)
-
-        seqq_1 = np.array([1, 2, 3])
-        seqq_2 = np.array([4, 5, 6, 7])
-
+        seqq_1 = cv.get_random_sequence(2000, 3000)
+        seqq_2 = cv.get_random_sequence(2000, 3000)
 
         fft_con, dir_con, fft_tme, dir_tme = cv.compare_direct_and_fft_conv(seqq_1, seqq_2)
 
-        print("Seq_1 of length {}".format(seqq_1.shape[0]))
-        print("Seq_2 of length {}".format(seqq_2.shape[0]))
-        print("FFT Conv length {}".format(fft_con.shape[0]))
-        print("Dir Conv length {}".format(dir_con.shape[0]))
-        print("Time for FFT {}".format(fft_tme))
+        print("Sequence 1 of length {}".format(seqq_1.shape[0]))
+        print("Sequence 2 of length {}".format(seqq_2.shape[0]))
+        print("FFT Convolution length {}".format(fft_con.shape[0]))
+        print("Direct Convolution length {}".format(dir_con.shape[0]))
+        print("Time for convolution using FFT {}".format(fft_tme))
         print("Time for Direct Convolution {}".format(dir_tme))
+
+        # check if the sequencees are equal
+        length = fft_con.shape[0]
+        success = True
+        for i in range(0, length-1):
+            if round(fft_con[i], 9) != round(dir_con[i], 9):
+                print("Sequences not equal at element number {}".format(i))
+                success = False
+        if success:
+            print("Sequences are equal for direct convolution and convolution using fft")
+        print("---------------------------------------------")
+        # Checking for error when no zero padding
+
+        fft_con_no_zero_pad = cv.fft_convolution(seqq_1, seqq_2, zero_padding=False)
+        if fft_con_no_zero_pad.shape[0] != dir_con.shape[0]:
+            print("Without zero padding the two sequences have different lengths")
+            print("Convolution using FFT without zero pad sequence length {}".format(fft_con_no_zero_pad.shape[0]))
+            print("Direct Convolution sequence length {}".format(dir_con.shape[0]))
         print("*********************************************")
-
-
