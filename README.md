@@ -11,6 +11,7 @@ Legend-
     *   HW2 - Homework 2 - Principal Component Analysis
     *	HW3 - Homework 3 - Singular value Decomposition
     *   HW4 - Homework 4 - Multi-class Linear Classifier
+    *   HW5 - Homework 5 - Linear Convolution
 
 	 
 Each folder has its own utils file.
