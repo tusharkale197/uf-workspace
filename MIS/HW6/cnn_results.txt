@@ -1,0 +1,72 @@
+Kernal size 3 and Adam optimizer -> Relu -> Relu
+Test loss: 0.04272174841596107 
+Test accuracy: 0.9904 
+Train loss: 0.006453076575118272 
+Train accuracy: 0.9978499999682109 
+****************************** 
+Kernal size 3 and Adam optimizer->tanh->Relu
+Test loss: 0.04033362742296572 
+Test accuracy: 0.9905 
+Train loss: 0.0053223915007605685 
+Train accuracy: 0.9982833333333333 
+****************************** 
+Kernal size 3 and Adam optimizer->Relu->tanh
+Test loss: 0.0468901523733025 
+Test accuracy: 0.9908 
+Train loss: 0.0060787580620963125 
+Train accuracy: 0.9979166666666667 
+****************************** 
+Kernal size 3 and Adam optimizer->tanh->tanh
+Test loss: 0.05311618799193734 
+Test accuracy: 0.9901 
+Train loss: 0.0034288654620662174 
+Train accuracy: 0.9988999999682109 
+****************************** 
+Kernal size 3 and Adam optimizer->tanh->no max pool
+Test loss: 0.2366579637363553 
+Test accuracy: 0.9357 
+Train loss: 0.20756601510047912 
+Train accuracy: 0.9422666666666667 
+****************************** 
+Kernal size 3 and Adam optimizer->relu->no max pool
+Test loss: 0.07117960252589109 
+Test accuracy: 0.9801 
+Train loss: 0.009592950460066398 
+Train accuracy: 0.9980666666348775 
+****************************** 
+Kernal size 3 and SGD optimizer -> Relu -> Relu
+Test loss: 0.07282304097861052 
+Test accuracy: 0.977 
+Train loss: 0.0778592276930809 
+Train accuracy: 0.9763500000317892 
+****************************** 
+Kernal size 3 and SGD optimizer->tanh->Relu
+Test loss: 0.09175466911643744 
+Test accuracy: 0.9723 
+Train loss: 0.09105295281410217 
+Train accuracy: 0.9732666666984559 
+****************************** 
+Kernal size 3 and SGD optimizer->Relu->tanh
+Test loss: 0.08519454998001456 
+Test accuracy: 0.9759 
+Train loss: 0.09466271042029063 
+Train accuracy: 0.9735500000317892 
+****************************** 
+Kernal size 3 and SGD optimizer->tanh->tanh
+Test loss: 0.10455693353563547 
+Test accuracy: 0.9706 
+Train loss: 0.11610221974054973 
+Train accuracy: 0.9669999999682108 
+****************************** 
+Kernal size 3 and SGD optimizer->tanh->no max pool
+Test loss: 0.2577619668036699 
+Test accuracy: 0.9273 
+Train loss: 0.26639003092447916 
+Train accuracy: 0.9243666666348775 
+****************************** 
+Kernal size 3 and SGD optimizer->relu->no max pool
+Test loss: 0.2516186932995915 
+Test accuracy: 0.9273 
+Train loss: 0.25812914214134214 
+Train accuracy: 0.9273333333333333 
+****************************** 
